@@ -1,1 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>3D Environmental Clock</title>
+  
+  <!-- CesiumJS CDN -->
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.103/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.103/Build/Cesium/Cesium.js"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #0b0b0b;
+      color: #fff;
+      overflow-x: hidden;
+    }
+    .title {
+      text-align: center;
+      padding: 20px 10px 10px;
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #33ffcc;
+    }
+    #cesiumContainer {
+      width: 100%;
+      height: 400px;
+    }
+    .counter-container {
+      text-align: center;
+      margin: 20px auto;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      background: #111;
+      max-width: 500px;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,255,255,0.2);
+    }
+    .counter-container span {
+      color: #00ffb3;
+      font-weight: bold;
+    }
+    @media (max-width: 600px) {
+      .counter-container {
+        font-size: 1rem;
+        padding: 10px;
+      }
+      .title {
+        font-size: 1.3rem;
+      }
+      #cesiumContainer {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="title">🌍 Real-Time 3D World Environmental Clock</div>
+
+  <div id="cesiumContainer"></div>
+
+  <div class="counter-container">
+    CO₂ Level: <span id="co2Level">415.00</span> ppm<br>
+    Human Births Today: <span id="birthCount">0</span><br>
+    Human Deaths Today: <span id="deathCount">0</span>
+  </div>
+
+  <script>
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+      timeline: false,
+      animation: false,
+      baseLayerPicker: false,
+      geocoder: false,
+      homeButton: false,
+      navigationHelpButton: false,
+      sceneModePicker: false
+    });
+
+    // Simulated data
+    let co2Level = 415;
+    let birthCount = 0;
+    let deathCount = 0;
+
+    function updateCounters() {
+      co2Level += (Math.random() * 0.01);
+      birthCount += Math.floor(Math.random() * 4);
+      deathCount += Math.floor(Math.random() * 2);
+      
+      document.getElementById('co2Level').innerText = co2Level.toFixed(2);
+      document.getElementById('birthCount').innerText = birthCount;
+      document.getElementById('deathCount').innerText = deathCount;
+    }
+
+    setInterval(updateCounters, 2000);
+  </script>
+
+</body>
+</html>
 
